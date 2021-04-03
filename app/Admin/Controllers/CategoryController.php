@@ -6,7 +6,7 @@ use App\Models\Category;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Http\Controllers\AdminController;
 
 class CategoryController extends AdminController
 {
@@ -18,15 +18,12 @@ class CategoryController extends AdminController
     protected function grid()
     {
         return Grid::make(new Category(), function (Grid $grid) {
-            $grid->column('id')->sortable();
-            $grid->column('parent_id');
+            $grid->column('id')->tree();
             $grid->column('name');
-            $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-
+                $filter->like('name');
             });
         });
     }
@@ -58,7 +55,7 @@ class CategoryController extends AdminController
     {
         return Form::make(new Category(), function (Form $form) {
             $form->display('id');
-            $form->text('parent_id')->required();
+            $form->select('parent_id')->required()->default(0)->options(Category::selector($form->id));
             $form->text('name')->required();
 
             $form->display('created_at');

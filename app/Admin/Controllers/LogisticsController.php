@@ -6,7 +6,7 @@ use App\Admin\Repositories\Logistics;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Http\Controllers\AdminController;
 
 class LogisticsController extends AdminController
 {
@@ -29,10 +29,10 @@ class LogisticsController extends AdminController
             $grid->column('status');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -78,7 +78,7 @@ class LogisticsController extends AdminController
             $form->text('order_number');
             $form->text('arrival_date');
             $form->text('status');
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });

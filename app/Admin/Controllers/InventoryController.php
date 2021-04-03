@@ -6,7 +6,7 @@ use App\Models\Inventory;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Http\Controllers\AdminController;
 
 class InventoryController extends AdminController
 {
@@ -24,10 +24,10 @@ class InventoryController extends AdminController
             $grid->column('available_inventory');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -63,7 +63,7 @@ class InventoryController extends AdminController
             $form->text('warehouse_id');
             $form->text('product_id');
             $form->text('available_inventory');
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });
