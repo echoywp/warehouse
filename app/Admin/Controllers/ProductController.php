@@ -2,11 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\Product;
+use App\Models\Product;
+use App\Models\Category;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use function Deployer\option;
 
 class ProductController extends AdminController
 {
@@ -18,19 +20,21 @@ class ProductController extends AdminController
     protected function grid()
     {
         return Grid::make(new Product(), function (Grid $grid) {
-            $grid->column('id')->sortable();
             $grid->column('name');
             $grid->column('desc');
-            $grid->column('category_id');
+            $grid->column('category_id')->display(function () {
+                return $this->category->title;
+            });
             $grid->column('unit');
             $grid->column('length');
             $grid->column('width');
             $grid->column('height');
             $grid->column('weight');
             $grid->column('price');
-            $grid->column('status');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+            $grid->status()->switch('', true);
+            $grid->column('updated_at')->display(function ($value) {
+                return substr($value, 0, 10);
+            })->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -76,15 +80,18 @@ class ProductController extends AdminController
             $form->display('id');
             $form->text('name')->required();
             $form->text('desc')->required();
-            $form->text('category_id')->required();
-            $form->text('unit')->required();
+            $form->select('category_id')->options(Category::selector())->required();
+            $form->select('unit')->options(Product::$unit)->required();
             $form->text('length')->required();
             $form->text('width')->required();
             $form->text('height')->required();
             $form->text('weight')->required();
             $form->text('price')->required();
-            $form->text('status')->required();
-
+            $form->hidden('status')->customFormat(function ($v) {
+                    return $v ? 1 : 0;
+                })->saving(function ($v) {
+                    return $v ? 1 : 0;
+                });
             $form->display('created_at');
             $form->display('updated_at');
         });

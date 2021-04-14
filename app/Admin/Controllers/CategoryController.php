@@ -19,7 +19,7 @@ class CategoryController extends AdminController
     {
         return Grid::make(new Category(), function (Grid $grid) {
             $grid->column('id')->tree();
-            $grid->column('name');
+            $grid->column('title');
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
@@ -40,7 +40,7 @@ class CategoryController extends AdminController
         return Show::make($id, new Category(), function (Show $show) {
             $show->field('id');
             $show->field('parent_id');
-            $show->field('name');
+            $show->field('title');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -56,7 +56,7 @@ class CategoryController extends AdminController
         return Form::make(new Category(), function (Form $form) {
             $form->display('id');
             $form->select('parent_id')->required()->default(0)->options(Category::selector($form->id));
-            $form->text('name')->required();
+            $form->text('title')->required();
 
             $form->display('created_at');
             $form->display('updated_at');

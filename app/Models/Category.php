@@ -13,7 +13,7 @@ class Category extends Model
 
     protected $table = 'category';
 
-    protected $titleColumn = 'name';
+    protected $titleColumn = 'title';
 
     protected $orderColumn = 'sort';
 
@@ -33,8 +33,8 @@ class Category extends Model
     public static function selector($id = '') {
         $categories = self::when($id, function ($sql) use ($id) {
             $sql->where('id', '!=', $id);
-        })->get()->map(function ($item) {;
-            return [$item->id => $item->name];
+        })->get()->map(function ($item) {
+            return [$item->id => $item->title];
         })->flatten()->toArray();
         return array_merge([0 => '顶级'], $categories);
     }
