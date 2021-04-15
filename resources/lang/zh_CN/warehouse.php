@@ -1,7 +1,7 @@
-<?php 
+<?php
 return [
     'labels' => [
-        'Warehouse' => 'Warehouse',
+        'Warehouse' => '仓库',
     ],
     'fields' => [
         'name' => '仓库名称',

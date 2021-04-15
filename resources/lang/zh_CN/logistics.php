@@ -1,7 +1,7 @@
-<?php 
+<?php
 return [
     'labels' => [
-        'Logistics' => 'Logistics',
+        'Logistics' => '物流',
     ],
     'fields' => [
         'number' => '运单号',

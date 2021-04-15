@@ -1,7 +1,7 @@
-<?php 
+<?php
 return [
     'labels' => [
-        'Inventory' => 'Inventory',
+        'Inventory' => '库存',
     ],
     'fields' => [
         'warehouse_id' => '仓库ID',

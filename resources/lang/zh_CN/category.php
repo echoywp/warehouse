@@ -5,7 +5,7 @@ return [
     ],
     'fields' => [
         'parent_id' => '父级ID',
-        'name' => '分类名称',
+        'title' => '分类名称',
     ],
     'options' => [
     ],
