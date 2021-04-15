@@ -11,7 +11,9 @@ class Product extends Model
 	use HasDateTimeFormatter;
     protected $table = 'product';
 
-    protected $appends = ['unit_trans'];
+    protected $appends = ['unit_trans', 'category_trans'];
+
+    protected $guarded = ['warehouse'];
 
     public static $unit = [
         1 => '个',
@@ -26,6 +28,10 @@ class Product extends Model
 
     public function getUnitTransAttribute() {
         return self::$unit[$this->attributes['unit']];
+    }
+
+    public function getCategoryTransAttribute() {
+        return $this->category->title;
     }
 
     public function category() {

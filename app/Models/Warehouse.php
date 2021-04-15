@@ -10,5 +10,13 @@ class Warehouse extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'warehouse';
-    
+
+    /**
+     * @return mixed
+     */
+    public static function selector() {
+        return self::get()->map(function ($item) {
+            return [$item->id => $item->name];
+        })->flatten()->toArray();
+    }
 }

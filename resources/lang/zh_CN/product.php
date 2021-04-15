@@ -14,6 +14,7 @@ return [
         'weight' => '重量（G）',
         'price' => '采购价',
         'status' => '状态',
+        'warehouse' => '仓库',
     ],
     'options' => [
     ],

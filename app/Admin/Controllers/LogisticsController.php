@@ -18,7 +18,6 @@ class LogisticsController extends AdminController
     protected function grid()
     {
         return Grid::make(new Logistics(), function (Grid $grid) {
-            $grid->column('id')->sortable();
             $grid->column('number');
             $grid->column('type');
             $grid->column('channel');
@@ -26,13 +25,11 @@ class LogisticsController extends AdminController
             $grid->column('user_id');
             $grid->column('order_number');
             $grid->column('arrival_date');
-            $grid->column('status');
-            $grid->column('created_at');
+            $grid->column('status')->switch();
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-
+                $filter->like('name');
             });
         });
     }

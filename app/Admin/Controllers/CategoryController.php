@@ -21,10 +21,7 @@ class CategoryController extends AdminController
             $grid->column('id')->tree();
             $grid->column('title');
             $grid->column('updated_at')->sortable();
-
-            $grid->filter(function (Grid\Filter $filter) {
-                $filter->like('name');
-            });
+            $grid->disableFilter();
         });
     }
 
@@ -54,11 +51,8 @@ class CategoryController extends AdminController
     protected function form()
     {
         return Form::make(new Category(), function (Form $form) {
-            $form->display('id');
             $form->select('parent_id')->options(Category::selector())->required();
             $form->text('title')->required();
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }
