@@ -55,9 +55,8 @@ class CategoryController extends AdminController
     {
         return Form::make(new Category(), function (Form $form) {
             $form->display('id');
-            $form->select('parent_id')->required()->default(0)->options(Category::selector($form->id));
+            $form->tree('category_id', '父级分类')->nodes((new Category())->allNodes())->setTitleColumn('title')->default(0);
             $form->text('title')->required();
-
             $form->display('created_at');
             $form->display('updated_at');
         });

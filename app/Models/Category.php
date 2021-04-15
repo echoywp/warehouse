@@ -19,11 +19,6 @@ class Category extends Model
 
     protected $parentColumn = 'parent_id';
 
-    // 返回空值即可禁用 order 字段
-    public function getOrderColumn()
-    {
-        return null;
-    }
 
     /**
      * @param string $id
