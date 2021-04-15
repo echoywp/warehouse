@@ -11,15 +11,21 @@ class Product extends Model
 	use HasDateTimeFormatter;
     protected $table = 'product';
 
+    protected $appends = ['unit_trans'];
+
     public static $unit = [
         1 => '个',
         2 => '根',
         3 => '桶',
-        4 => '瓶',
+        4 => '瓶'
     ];
 
-    public function getUnitAttribute($value) {
-        return self::$unit[$value];
+    public function setCategoryIdAttribute($value) {
+        $this->attributes['category_id'] = $value[0];
+    }
+
+    public function getUnitTransAttribute() {
+        return self::$unit[$this->attributes['unit']];
     }
 
     public function category() {
