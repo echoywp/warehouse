@@ -22,6 +22,10 @@ class Product extends Model
         4 => '瓶'
     ];
 
+    public function inventory() {
+        return Inventory::whereProductId($this->id)->get();
+    }
+
     public function setCategoryIdAttribute($value) {
         $this->attributes['category_id'] = $value[0];
     }

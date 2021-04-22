@@ -94,7 +94,11 @@ class ProductController extends AdminController
                     ->nodes((new Category())->allNodes())
                     ->setTitleColumn('title')->required();
                 $form->select('unit')->options(Product::$unit)->required();
-                $form->multipleSelect('warehouse')->options(Warehouse::selector())->required();
+                if ($form->isEditing()) {
+                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->value($form->model()->inventory()->pluck('id')->toArray())->disable();
+                } else {
+                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->required();
+                }
             });
             $form->column(6, function (Form $form) {
                 $form->text('price')->required()->rules('numeric', config('option.rules'));
@@ -109,6 +113,7 @@ class ProductController extends AdminController
                 })->saving(function ($v) {
                     return $v ? 1 : 0;
                 })->default(1);
+            $form->ignore(['warehouse']);
             $form->submitted(function (Form $form) {
                 $category_id = $form->input('category_id');
                 if($category_id && strpos($category_id, ',')) {
