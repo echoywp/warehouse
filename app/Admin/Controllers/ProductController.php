@@ -4,12 +4,12 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductLog;
 use App\Models\Warehouse;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
-use function Deployer\option;
 
 class ProductController extends AdminController
 {
@@ -119,6 +119,13 @@ class ProductController extends AdminController
                 if($category_id && strpos($category_id, ',')) {
                     $form->responseValidationMessages('category_id', '分类不可多选');
                 }
+            });
+            $form->saved(function (Form $form ,$result) {
+                 if ($form->isCreating()) {
+                     ProductLog::log();
+                 } elseif ($form->isEditing()) {
+                     dd($form->model()->id);
+                 }
             });
         });
     }

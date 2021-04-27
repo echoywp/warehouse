@@ -37,8 +37,11 @@ Form::resolving(function (Form $form) {
     });
 
 });
+
+// 替换模板
 app('view')->prependNamespace('admin', resource_path('views/admin'));
 
+// 配置管理
 if (file_exists('upload/' . admin_setting('logo'))) {
     $logo = '<img src="/upload/' . admin_setting('logo') . '" width="35">&nbsp;' . admin_setting('company_name');
     $mini = '<img src="/upload/' . admin_setting('logo') . '" >';
@@ -54,3 +57,15 @@ config([
     'app.url' => admin_setting('url'),
     'app.VERSION' => admin_setting('version')
 ]);
+
+// 双击弹框
+$script = <<<JS
+      $("#grid-table > tbody > tr").on("dblclick",function() {
+         var obj = $(this).find(".feather.icon-edit-1");
+         if (obj.length == 1) {
+             obj.trigger("click")
+         }
+      })
+JS;
+Admin::script($script);
+
