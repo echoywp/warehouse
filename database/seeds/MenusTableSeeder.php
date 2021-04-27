@@ -20,6 +20,7 @@ class MenusTableSeeder extends Seeder
             ['id' => 12, 'parent_id' => 11, 'order'=>12, 'title'=>'仓库列表', 'icon'=> '', 'uri'=>'warehouse', ],
             ['id' => 13, 'parent_id' => 11, 'order'=>13, 'title'=>'库存列表', 'icon'=> '', 'uri'=>'inventory', ],
             ['id' => 14, 'parent_id' => 0, 'order'=>14, 'title'=>'物流列表', 'icon'=> 'fa-ambulance', 'uri'=>'logistics', ],
+            ['id' => 15, 'parent_id' => 0, 'order'=>7, 'title'=>'配置', 'icon'=> 'fa-gears', 'uri'=>'common', ],
         ];
         foreach ($items as $item) {
             Menu::updateOrCreate(['id' => $item['id']], $item);

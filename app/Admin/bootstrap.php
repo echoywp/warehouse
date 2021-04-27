@@ -38,3 +38,19 @@ Form::resolving(function (Form $form) {
 
 });
 app('view')->prependNamespace('admin', resource_path('views/admin'));
+
+if (file_exists('upload/' . admin_setting('logo'))) {
+    $logo = '<img src="/upload/' . admin_setting('logo') . '" width="35">&nbsp;' . admin_setting('company_name');
+    $mini = '<img src="/upload/' . admin_setting('logo') . '" >';
+} else {
+    $logo = config('admin.logo');
+    $mini = config('admin.logo-mini');
+}
+config([
+    'admin.title' => admin_setting('web_name'),
+    'admin.name' => admin_setting('company_name'),
+    'admin.logo' => $logo,
+    'admin.logo-mini' => $mini,
+    'app.url' => admin_setting('url'),
+    'app.VERSION' => admin_setting('version')
+]);

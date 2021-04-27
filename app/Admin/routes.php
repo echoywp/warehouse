@@ -26,4 +26,7 @@ Route::group([
 
     // 物流信息
     $router->resource('logistics', 'LogisticsController');
+
+    // 系统配置
+    $router->resource('common', 'CommonController');
 });
