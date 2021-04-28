@@ -10,5 +10,4 @@ class Inventory extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'inventory';
-    
 }

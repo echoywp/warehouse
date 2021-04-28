@@ -15,6 +15,19 @@ class Product extends Model
 
     protected $guarded = ['warehouse'];
 
+    public static $fields = [
+        'name',
+        'desc',
+        'category_id',
+        'unit',
+        'length',
+        'width',
+        'height',
+        'weight',
+        'price',
+        'status'
+    ];
+
     public static $unit = [
         1 => '个',
         2 => '根',
@@ -22,7 +35,7 @@ class Product extends Model
         4 => '瓶'
     ];
 
-    public function inventory() {
+    public function getInventory() {
         return Inventory::whereProductId($this->id)->get();
     }
 
@@ -40,5 +53,22 @@ class Product extends Model
 
     public function category() {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public static function booted() {
+        static::created(function ($product) {
+            ProductLog::log(1, $product->id, '新增');
+        });
+        static::updated(function ($product) {
+            $content = '';
+            foreach (self::$fields as $item) {
+                if ($product->getOriginal($item) != $product->$item) {
+                    $content .= '【' . admin_trans('product.fields.'.$item) . '】由【'. $product->getOriginal($item) .'】修改为【'. $product->$item .'】';
+                }
+            }
+            if (!empty($content)) {
+                ProductLog::log(2, $product->id, $content);
+            }
+        });
     }
 }

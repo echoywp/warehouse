@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductLog;
@@ -23,6 +24,7 @@ class ProductController extends AdminController
     protected function grid()
     {
         return Grid::make(new Product(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('name');
             $grid->column('desc');
             $grid->column('category_trans', admin_trans_field('category_id'));
@@ -88,14 +90,15 @@ class ProductController extends AdminController
     {
         return Form::make(new Product(), function (Form $form) {
             $form->column(6, function (Form $form) {
-                $form->text('name')->required()->rules('max:20', config('option.rules'));
+                $form->text('name')->required()->rules('max:20', config('option.rules'))
+                    ->creationRules('unique:product,name', config('option.rules'))->updateRules('unique:product,name,{{id}}', config('option.rules'));
                 $form->text('desc')->required()->rules('max:50', config('option.rules'));
                 $form->tree('category_id')
                     ->nodes((new Category())->allNodes())
                     ->setTitleColumn('title')->required();
                 $form->select('unit')->options(Product::$unit)->required();
                 if ($form->isEditing()) {
-                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->value($form->model()->inventory()->pluck('id')->toArray())->disable();
+                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->value($form->model()->getInventory()->pluck('id')->toArray())->disable();
                 } else {
                     $form->multipleSelect('warehouse')->options(Warehouse::selector())->required();
                 }
@@ -114,18 +117,26 @@ class ProductController extends AdminController
                     return $v ? 1 : 0;
                 })->default(1);
             $form->ignore(['warehouse']);
+            $warehouse = $form->input('warehouse');
+            $form->saved(function (Form $form, $id) use ($warehouse){
+                if ($form->isCreating()) {
+                    $data = [];
+                    $data = array_map(function ($item) use ($id, $data) {
+                        return array_merge($data, [
+                            'product_id' => $id,
+                            'warehouse_id' => $item,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    }, array_filter($warehouse));
+                    Inventory::insert($data);
+                }
+            });
             $form->submitted(function (Form $form) {
                 $category_id = $form->input('category_id');
                 if($category_id && strpos($category_id, ',')) {
                     $form->responseValidationMessages('category_id', '分类不可多选');
                 }
-            });
-            $form->saved(function (Form $form ,$result) {
-                 if ($form->isCreating()) {
-                     ProductLog::log();
-                 } elseif ($form->isEditing()) {
-                     dd($form->model()->id);
-                 }
             });
         });
     }
