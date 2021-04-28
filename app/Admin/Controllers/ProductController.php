@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\ProductLogAction;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Category;
@@ -9,6 +10,7 @@ use App\Models\ProductLog;
 use App\Models\Warehouse;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
@@ -24,7 +26,7 @@ class ProductController extends AdminController
     protected function grid()
     {
         return Grid::make(new Product(), function (Grid $grid) {
-            $grid->model()->orderBy('id', 'desc');
+//            $grid->model()->orderBy('id', 'desc');
             $grid->column('name');
             $grid->column('desc');
             $grid->column('category_trans', admin_trans_field('category_id'));
@@ -45,13 +47,17 @@ class ProductController extends AdminController
                 $filter->equal('status')->select(config('option.switch_status'))->width(3);
             });
 
-
             $grid->export()->filename($this->filename)->rows(function (array $rows) {
                 foreach ($rows as $index => &$row) {
                     $row['status'] = config('option.switch_status')[$row['status']];
                 }
                 return $rows;
             });
+
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                $actions->append(ProductLogAction::make()->setKey($actions->row->id));
+            });
+
         });
     }
 

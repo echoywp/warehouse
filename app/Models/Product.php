@@ -63,7 +63,13 @@ class Product extends Model
             $content = '';
             foreach (self::$fields as $item) {
                 if ($product->getOriginal($item) != $product->$item) {
-                    $content .= '【' . admin_trans('product.fields.'.$item) . '】由【'. $product->getOriginal($item) .'】修改为【'. $product->$item .'】';
+                    $history =  $product->getOriginal($item);
+                    $current = $product->$item;
+                    if($item == 'unit') {
+                        $history = self::$unit[$history];
+                        $current = self::$unit[$current];
+                    }
+                    $content .= '【' . admin_trans('product.fields.'.$item) . '】由【'. $history .'】修改为【'. $current .'】'. "<br>";
                 }
             }
             if (!empty($content)) {
