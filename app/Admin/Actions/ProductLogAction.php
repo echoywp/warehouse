@@ -6,8 +6,8 @@ use App\Models\Product;
 use App\Models\ProductLog;
 use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Actions\Response;
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Traits\HasPermissions;
 use Dcat\Admin\Widgets\Table;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -31,10 +31,22 @@ class ProductLogAction extends Action
      */
     public function handle(Request $request)
     {
+
+
         $id = $this->getKey();
-        $log = ProductLog::whereProductId($id)->orderBy('id', 'desc')->select('content', 'created_at')->get();
-        $table = Table::make($log->toArray());
-        return $this->response()->html($table);
+        $gird =  Grid::make(new ProductLog(), function (Grid $grid) use ($id) {
+            $grid->model()->orderBy('id', 'desc')->whereProductId($id)->with('user');
+            $grid->column('user.name', trans('操作人'));
+            $grid->column('content', trans('修改内容'))->display(function ($value) {
+                return $value;
+            });
+            $grid->column('created_at');
+            $grid->withBorder();
+            $grid->disableToolbar();
+            $grid->disableActions();
+            $grid->disableRowSelector();
+        });
+        return $this->response()->html($gird);
     }
 
     protected function handleHtmlResponse()
@@ -63,7 +75,7 @@ JS;
 
     public function html()
     {
-        // 按钮的html
+
         $html = parent::html();
         return <<<HTML
             {$html}

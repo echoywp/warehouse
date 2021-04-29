@@ -15,7 +15,7 @@ class ProductLog extends Model
     protected $fillable = ['type', 'product_id', 'content', 'user_id'];
 
     public function user() {
-        return $this->hasOne(AdminUser::class, 'id', 'user_id');
+        return $this->hasOne(AdminUser::class, 'id', 'user_id')->select('id', 'name');
     }
 
     /**
