@@ -124,16 +124,19 @@ class ProductController extends AdminController
             $warehouse = $form->input('warehouse');
             $form->saved(function (Form $form, $id) use ($warehouse){
                 if ($form->isCreating()) {
-                    $data = [];
-                    $data = array_map(function ($item) use ($id, $data) {
-                        return array_merge($data, [
+                    array_map(function ($item) use ($id) {
+                        Inventory::create([
                             'product_id' => $id,
                             'warehouse_id' => $item,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
                         ]);
+//                        return array_merge($data, [
+//                            'product_id' => $id,
+//                            'warehouse_id' => $item,
+//                            'created_at' => date('Y-m-d H:i:s'),
+//                            'updated_at' => date('Y-m-d H:i:s'),
+//                        ]);
                     }, array_filter($warehouse));
-                    Inventory::insert($data);
+//                    Inventory::insert($data);
                 }
             });
             $form->submitted(function (Form $form) {

@@ -30,9 +30,13 @@ class InventoryController extends AdminController
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('warehouse_id',  trans('inventory.fields.warehouse_id'))->select(Warehouse::selector());
+                $filter->equal('product_id',  trans('inventory.fields.product_id'))->select(Product::selector());
             });
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 $actions->append(InventoryLogAction::make()->setKey($actions->row->id));
+                $actions->disableEdit();
+                $actions->disableDelete();
+                $actions->disableView();
             });
         });
     }

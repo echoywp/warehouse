@@ -11,6 +11,7 @@ class InventoryLog extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'inventory_log';
+    protected $fillable = ['type', 'column', 'user_id', 'num', 'module', 'inventory_id', 'product_id',];
 
     public function user() {
         return $this->hasOne(AdminUser::class, 'id', 'user_id')->select('id', 'name');

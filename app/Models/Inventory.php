@@ -10,6 +10,7 @@ class Inventory extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'inventory';
+    protected $fillable = ['warehouse_id', 'product_id', 'available_inventory'];
 
     public function warehouse() {
         return $this->hasOne(Warehouse::class, 'id', 'warehouse_id');
