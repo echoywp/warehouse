@@ -12,7 +12,8 @@
             background: #e2982a;
         }
         .index, .nav span {
-            color: #ececec
+            color: #ececec;
+            font-size: 16px
         }
     </style>
 @endsection
