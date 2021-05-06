@@ -2,7 +2,10 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\InventoryLogAction;
 use App\Models\Inventory;
+use App\Models\Product;
+use App\Models\Warehouse;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -18,16 +21,18 @@ class InventoryController extends AdminController
     protected function grid()
     {
         return Grid::make(new Inventory(), function (Grid $grid) {
-            $grid->column('id')->sortable();
-            $grid->column('warehouse_id');
-            $grid->column('product_id');
+            $grid->model()->with(['warehouse', 'product']);
+            $grid->column('warehouse.name', trans('inventory.fields.warehouse_id'));
+            $grid->column('product.name', trans('inventory.fields.product_id'));
             $grid->column('available_inventory');
-            $grid->column('created_at');
             $grid->column('updated_at')->sortable();
+            $grid->disableRowSelector();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-
+                $filter->equal('warehouse_id',  trans('inventory.fields.warehouse_id'))->select(Warehouse::selector());
+            });
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                $actions->append(InventoryLogAction::make()->setKey($actions->row->id));
             });
         });
     }
@@ -59,13 +64,9 @@ class InventoryController extends AdminController
     protected function form()
     {
         return Form::make(new Inventory(), function (Form $form) {
-            $form->display('id');
-            $form->text('warehouse_id');
-            $form->text('product_id');
+            $form->select('warehouse_id')->options(Warehouse::selector());
+            $form->select('product_id')->options(Product::selector());
             $form->text('available_inventory');
-
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

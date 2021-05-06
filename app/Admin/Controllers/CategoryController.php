@@ -3,10 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Http\JsonResponse;
 
 class CategoryController extends AdminController
 {
@@ -54,5 +56,26 @@ class CategoryController extends AdminController
             $form->select('parent_id')->options(Category::selector())->required();
             $form->text('title')->required();
         });
+    }
+
+    public function destroy($id)
+    {
+        $hasChild = Category::whereParentId($id)->first();
+        if($hasChild) {
+            return response()->json(['status' => true, 'data' => [
+                'type' => 'warning',
+                'message' => '此分类下还有下级分类，暂不可删除！'
+            ]]);
+        }
+
+        $hasProduct = Product::whereCategoryId($id)->first();
+
+        if ($hasProduct) {
+            return response()->json(['status' => true, 'data' => [
+                'type' => 'warning',
+                'message' => '此分类下还有相关产品，暂不可删除！'
+            ]]);
+        }
+        return parent::destroy($id);
     }
 }

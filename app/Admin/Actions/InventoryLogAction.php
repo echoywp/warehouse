@@ -2,19 +2,16 @@
 
 namespace App\Admin\Actions;
 
-use App\Models\Product;
-use App\Models\ProductLog;
+use App\Models\InventoryLog;
 use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Actions\Response;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Traits\HasPermissions;
-use Dcat\Admin\Widgets\Table;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class ProductLogAction extends Action
+class InventoryLogAction extends Action
 {
     /**
      * @return string
@@ -32,12 +29,10 @@ class ProductLogAction extends Action
     public function handle(Request $request)
     {
         $id = $this->getKey();
-        $gird =  Grid::make(new ProductLog(), function (Grid $grid) use ($id) {
-            $grid->model()->orderBy('id', 'desc')->whereProductId($id)->with('user')->limit(6);
+        $gird =  Grid::make(new InventoryLog(), function (Grid $grid) use ($id) {
+            $grid->model()->orderBy('id', 'desc')->whereInventoryId($id)->with('user')->limit(6);
             $grid->column('user.name', trans('操作人'));
-            $grid->column('content', trans('修改内容'))->display(function ($value) {
-                return $value;
-            });
+            $grid->column('module', trans('操作模块'));
             $grid->column('created_at');
             $grid->withBorder();
             $grid->disableToolbar();

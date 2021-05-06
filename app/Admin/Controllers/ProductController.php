@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\ProductLogAction;
 use App\Models\Inventory;
+use App\Models\InventoryLog;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Warehouse;
@@ -23,6 +24,7 @@ class ProductController extends AdminController
     protected function grid()
     {
         return Grid::make(new Product(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('name');
             $grid->column('desc');
             $grid->column('category_trans', admin_trans_field('category_id'));
@@ -40,12 +42,12 @@ class ProductController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->panel();
                 $filter->like('name')->width(3);
-                $filter->equal('status')->select(config('option.switch_status'))->width(3);
+                $filter->equal('status')->select(config('option.option.status'))->width(3);
             });
 
             $grid->export()->filename(trans('Product.labels.Product'))->rows(function (array $rows) {
                 foreach ($rows as $index => &$row) {
-                    $row['status'] = config('option.switch_status')[$row['status']];
+                    $row['status'] = config('option.option.status')[$row['status']];
                 }
                 return $rows;
             });
@@ -98,7 +100,7 @@ class ProductController extends AdminController
                 $form->tree('category_id')
                     ->nodes((new Category())->allNodes())
                     ->setTitleColumn('title')->required();
-                $form->select('unit')->options(Product::$unit)->required();
+                $form->select('unit')->options(config('option.option.unit'))->required();
                 if ($form->isEditing()) {
                     $form->multipleSelect('warehouse')->options(Warehouse::selector())->value($form->model()->getInventory()->pluck('id')->toArray())->disable();
                 } else {
