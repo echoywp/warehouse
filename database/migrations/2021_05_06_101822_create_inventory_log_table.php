@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWarehouseLogTable extends Migration
+class CreateInventoryLogTable extends Migration
 {
     /**
      * Run the migrations.
