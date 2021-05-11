@@ -25,7 +25,7 @@ Vue.use(Vant)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('login', require('./components/login.vue').default);
-// Vue.component('login', require('./components/login.vue'));
+Vue.component('index', require('./components/index.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
