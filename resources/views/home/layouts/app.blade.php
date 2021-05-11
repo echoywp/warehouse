@@ -7,13 +7,12 @@
     <van-nav-bar safe-area-inset-top></van-nav-bar>
     <van-number-keyboard safe-area-inset-bottom></van-number-keyboard>
     <link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{mix('css/main.css')}}">
     @yield('css')
 </head>
 <body>
 <div id="app">
-    <div class="container">
-        @yield('content')
-    </div>
+    @yield('content')
 </div>
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 @yield('js')

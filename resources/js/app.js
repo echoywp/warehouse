@@ -6,7 +6,12 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+// window.Vue = require('vue').default;
+import Vue from 'vue/dist/vue.common.js';
+import Vant from 'vant';
+import 'vant/lib/index.css'
+
+Vue.use(Vant)
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +24,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('login', require('./components/login.vue').default);
+// Vue.component('login', require('./components/login.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
