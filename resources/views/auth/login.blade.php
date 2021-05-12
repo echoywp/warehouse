@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', '员工登录')
 @section('css')
     <style>
         @media (min-width: 768px) {

@@ -29,4 +29,7 @@ Route::group([
 
     // 系统配置
     $router->resource('common', 'CommonController');
+
+    // 员工管理
+    $router->resource('user', 'UserController');
 });

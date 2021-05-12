@@ -46,6 +46,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection warehouse_id
      * @property Grid\Column|Collection product_id
      * @property Grid\Column|Collection available_inventory
+     * @property Grid\Column|Collection num
+     * @property Grid\Column|Collection module
+     * @property Grid\Column|Collection inventory_id
      * @property Grid\Column|Collection channel
      * @property Grid\Column|Collection destination
      * @property Grid\Column|Collection order_number
@@ -102,6 +105,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection warehouse_id(string $label = null)
      * @method Grid\Column|Collection product_id(string $label = null)
      * @method Grid\Column|Collection available_inventory(string $label = null)
+     * @method Grid\Column|Collection num(string $label = null)
+     * @method Grid\Column|Collection module(string $label = null)
+     * @method Grid\Column|Collection inventory_id(string $label = null)
      * @method Grid\Column|Collection channel(string $label = null)
      * @method Grid\Column|Collection destination(string $label = null)
      * @method Grid\Column|Collection order_number(string $label = null)
@@ -163,6 +169,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection warehouse_id
      * @property Show\Field|Collection product_id
      * @property Show\Field|Collection available_inventory
+     * @property Show\Field|Collection num
+     * @property Show\Field|Collection module
+     * @property Show\Field|Collection inventory_id
      * @property Show\Field|Collection channel
      * @property Show\Field|Collection destination
      * @property Show\Field|Collection order_number
@@ -219,6 +228,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection warehouse_id(string $label = null)
      * @method Show\Field|Collection product_id(string $label = null)
      * @method Show\Field|Collection available_inventory(string $label = null)
+     * @method Show\Field|Collection num(string $label = null)
+     * @method Show\Field|Collection module(string $label = null)
+     * @method Show\Field|Collection inventory_id(string $label = null)
      * @method Show\Field|Collection channel(string $label = null)
      * @method Show\Field|Collection destination(string $label = null)
      * @method Show\Field|Collection order_number(string $label = null)

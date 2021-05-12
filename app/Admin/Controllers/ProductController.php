@@ -129,14 +129,7 @@ class ProductController extends AdminController
                             'product_id' => $id,
                             'warehouse_id' => $item,
                         ]);
-//                        return array_merge($data, [
-//                            'product_id' => $id,
-//                            'warehouse_id' => $item,
-//                            'created_at' => date('Y-m-d H:i:s'),
-//                            'updated_at' => date('Y-m-d H:i:s'),
-//                        ]);
                     }, array_filter($warehouse));
-//                    Inventory::insert($data);
                 }
             });
             $form->submitted(function (Form $form) {
