@@ -3,7 +3,7 @@
         padding: 14px;
         margin-top: 10px;
         text-align: center;
-        color: #ff976a;
+        color: #52a1e1;
     }
     .login-form {
         text-align: center;

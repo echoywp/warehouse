@@ -4,7 +4,7 @@
     }
     .nav>>>div{
         border-radius: 50%;
-        background: #ff976a;
+        background: #52a1e1;
     }
     .index, .nav>>>span {
         color: #ececec;

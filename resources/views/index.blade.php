@@ -1,4 +1,4 @@
-@extends('home.layouts.app')
+@extends('layouts.app')
 
 @section('title', '选择操作')
 

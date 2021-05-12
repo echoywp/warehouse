@@ -11551,7 +11551,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.index[data-v-2ac2c897]{\n    margin-top: 30vh;\n}\n.nav[data-v-2ac2c897] div{\n    border-radius: 50%;\n    background: #ff976a;\n}\n.index[data-v-2ac2c897], .nav[data-v-2ac2c897] span {\n    color: #ececec;\n    font-size: 16px\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.index[data-v-2ac2c897]{\n    margin-top: 30vh;\n}\n.nav[data-v-2ac2c897] div{\n    border-radius: 50%;\n    background: #52a1e1;\n}\n.index[data-v-2ac2c897], .nav[data-v-2ac2c897] span {\n    color: #ececec;\n    font-size: 16px\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11575,7 +11575,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.title[data-v-172b28a4]{\n    padding: 14px;\n    margin-top: 10px;\n    text-align: center;\n    color: #ff976a;\n}\n.login-form[data-v-172b28a4] {\n    text-align: center;\n    background: #424242;\n}\n.login-form[data-v-172b28a4]::after{\n    border: none;\n}\n.input-top[data-v-172b28a4]{\n    padding: 18px;\n    margin: 20px auto;\n    width: 93%;\n    border-radius: 10px;\n    border-bottom: none;\n}\n.login-btn[data-v-172b28a4] {\n    margin: 0 auto;\n    width: 93%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.title[data-v-172b28a4]{\n    padding: 14px;\n    margin-top: 10px;\n    text-align: center;\n    color: #52a1e1;\n}\n.login-form[data-v-172b28a4] {\n    text-align: center;\n    background: #424242;\n}\n.login-form[data-v-172b28a4]::after{\n    border: none;\n}\n.input-top[data-v-172b28a4]{\n    padding: 18px;\n    margin: 20px auto;\n    width: 93%;\n    border-radius: 10px;\n    border-bottom: none;\n}\n.login-btn[data-v-172b28a4] {\n    margin: 0 auto;\n    width: 93%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
