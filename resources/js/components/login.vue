@@ -35,12 +35,13 @@
         <van-cell-group class="login-form">
             <van-field v-model="username" class="input-top" required label="用户名" placeholder="请输入用户名"></van-field>
             <van-field v-model="phone" class="input-top" required label="手机号" placeholder="请输入手机号"></van-field>
-            <van-button class="login-btn" round type="warning">登录</van-button>
+            <van-button class="login-btn" round type="warning" @click="doLogin">登录</van-button>
         </van-cell-group>
     </section>
 </template>
 
 <script>
+    import { login } from '../api'
     export default {
         data() {
             return {
@@ -49,6 +50,18 @@
             }
         },
         mounted() {
+        },
+        methods: {
+            doLogin() {
+                login({
+                    username: this.username,
+                    phone: this.phone
+                }).then(response => {
+                    console.log(123)
+                }).catch(error => {
+                    console.log(456)
+                })
+            }
         }
     }
 </script>

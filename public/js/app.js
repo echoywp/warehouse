@@ -6218,6 +6218,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./resources/js/api.js");
 //
 //
 //
@@ -6260,6 +6261,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6267,8 +6269,40 @@ __webpack_require__.r(__webpack_exports__);
       phone: ''
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  methods: {
+    doLogin: function doLogin() {
+      (0,_api__WEBPACK_IMPORTED_MODULE_0__.login)({
+        username: this.username,
+        phone: this.phone
+      }).then(function (response) {
+        console.log(123);
+      })["catch"](function (error) {
+        console.log(456);
+      });
+    }
+  }
 });
+
+/***/ }),
+
+/***/ "./resources/js/api.js":
+/*!*****************************!*\
+  !*** ./resources/js/api.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "login": () => (/* binding */ login)
+/* harmony export */ });
+/* harmony import */ var _http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./http */ "./resources/js/http.js");
+ // 登录
+
+var login = function login(data) {
+  return (0,_http__WEBPACK_IMPORTED_MODULE_0__.post)('auth/login', data);
+};
 
 /***/ }),
 
@@ -6362,6 +6396,95 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/http.js":
+/*!******************************!*\
+  !*** ./resources/js/http.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "get": () => (/* binding */ get),
+/* harmony export */   "post": () => (/* binding */ post),
+/* harmony export */   "put": () => (/* binding */ put),
+/* harmony export */   "$delete": () => (/* binding */ $delete)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+ // 环境
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://test.warehouse.com/'; //  要请求的后台地址
+// 请求超时
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.timeout) = 30000; //  post 请求头
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.post["Content-Type"]) = 'application/json';
+/**
+ * get方法，对应get请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function get(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get(url, {
+      params: params
+    }).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * post方法，对应post请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function post(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, params).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * put方法，对应put请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function put(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().put(url, params).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * $delete，对应delete请求
+ */
+
+function $delete(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, {
+      data: params
+    }).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
 
 /***/ }),
 
@@ -66355,7 +66478,11 @@ var render = function() {
           _vm._v(" "),
           _c(
             "van-button",
-            { staticClass: "login-btn", attrs: { round: "", type: "warning" } },
+            {
+              staticClass: "login-btn",
+              attrs: { round: "", type: "warning" },
+              on: { click: _vm.doLogin }
+            },
             [_vm._v("登录")]
           )
         ],
