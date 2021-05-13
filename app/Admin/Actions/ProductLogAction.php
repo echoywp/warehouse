@@ -20,7 +20,7 @@ class ProductLogAction extends Action
      * @return string
      */
 	protected $title = '日志';
-    protected $modalId = 'show-current-user';
+    protected $modalId = 'show-current-log';
 
     /**
      * Handle the action request.

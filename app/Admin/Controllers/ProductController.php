@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\CreateProductCardAction;
 use App\Admin\Actions\ProductLogAction;
 use App\Models\Inventory;
 use App\Models\InventoryLog;
@@ -26,7 +27,6 @@ class ProductController extends AdminController
         return Grid::make(new Product(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('name');
-            $grid->column('desc');
             $grid->column('category_trans', admin_trans_field('category_id'));
             $grid->column('unit_trans', admin_trans_field('unit'));
             $grid->column('length');
@@ -54,6 +54,7 @@ class ProductController extends AdminController
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 $actions->append(ProductLogAction::make()->setKey($actions->row->id));
+                $actions->append(CreateProductCardAction::make()->setKey($actions->row->id));
             });
 
         });
