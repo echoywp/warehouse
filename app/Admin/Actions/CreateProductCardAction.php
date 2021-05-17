@@ -4,6 +4,7 @@ namespace App\Admin\Actions;
 
 use App\Models\Product;
 use App\Models\ProductLog;
+use App\services\ProductCardService;
 use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Actions\Response;
 use Dcat\Admin\Grid;
@@ -35,7 +36,7 @@ class CreateProductCardAction extends Action
         $path = '/productCard/'. $id . '.jpg';
 //        if(file_exists($path)) {
             $product = Product::find($id);
-            createProductCard($product);
+            app(ProductCardService::class)->createCard($product);
 //        }
         return $this->response()->html('<img src="'. $path .'">');
     }
