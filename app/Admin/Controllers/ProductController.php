@@ -2,13 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\CreateProductCardAction;
 use App\Admin\Actions\ProductLogAction;
 use App\Models\Inventory;
-use App\Models\InventoryLog;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Warehouse;
+use App\services\ProductCardService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -35,6 +34,10 @@ class ProductController extends AdminController
             $grid->column('weight');
             $grid->column('price');
             $grid->status()->switch();
+            $grid->column('id', '货架卡')->display(function () {
+                $product = Product::find($this->id);
+                return app(ProductCardService::class)->createCard($product);
+            })->image('/');
             $grid->column('updated_at')->display(function ($value) {
                 return substr($value, 0, 10);
             })->sortable();
@@ -54,7 +57,6 @@ class ProductController extends AdminController
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 $actions->append(ProductLogAction::make()->setKey($actions->row->id));
-                $actions->append(CreateProductCardAction::make()->setKey($actions->row->id));
             });
 
         });

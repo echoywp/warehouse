@@ -9,35 +9,32 @@ class ProductCardService {
 
     protected $black;
 
+    protected $path;
+
     public function __construct(){
         $this->font = resource_path('fonts/msyh.ttc');
-        $this->canvas = imagecreate(400, 300);
-        imagecolorallocate($this->canvas, 255, 255, 255);
-        $this->black = imagecolorallocate($this->canvas, 20, 20, 20);
+        $this->canvas = imagecreatefromstring(file_get_contents(resource_path('images/product-card-template.png')));
+        $this->black = imagecolorallocate($this->canvas, 60, 60, 60);
     }
 
     public function createCard($product) {
-
-//        $qrCode = $this->getQrCode($product);
+        $this->path = 'productCard/'. $product->id .'.jpg';
+        imagettftext($this->canvas, 18, 0, 60, 89, $this->black, $this->font, '名 称：' . $product->name);
+        $specifications = '规 格（CM）：'.$product->length . ' * ' . $product->width . ' * ' . $product->height;
+        imagettftext($this->canvas, 18, 0, 60, 201, $this->black, $this->font, $specifications);
+        imagettftext($this->canvas, 18, 0, 60, 313, $this->black, $this->font, '重 量（G）：' . $product->weight);
+        imagettftext($this->canvas, 18, 0, 60, 425, $this->black, $this->font, '分 类：' . $product->category_trans);
+        $this->getQrCode($product->id);
 //        list($src_w, $src_h) = getimagesize($qrCode);
-        // 边框
-        imageline($this->canvas, 10, 10, 490, 10, $this->black);
-        imageline($this->canvas, 10, 10, 10, 290, $this->black);
-        imageline($this->canvas, 490, 10, 490, 290, $this->black);
-        imageline($this->canvas, 10, 290, 490, 290, $this->black);
-        // 表格
-        imageline($this->canvas, 10, 50, 490, 50, $this->black);
-        imagettftext($this->canvas, 14, 0, 220, 38, $this->black, $this->font, '产品卡');
-        // 中间分隔线
-        imageline($this->canvas, 248, 50, 248, 290, $this->black);
-        imagettftext($this->canvas, 14, 0, 220, 20, $this->black, $this->font, '这是标题');
-        imagejpeg($this->canvas, public_path('productCard/'. $product->id . '.jpg'));
-        ob_end_clean();
+        imagejpeg($this->canvas, public_path($this->path));
+        return '/' . $this->path;
     }
 
-    protected function getQrCode($product) {
-        $src_path = resource_path('images/t.jpg');
-        return imagecreatefromstring(file_get_contents($src_path));
-        return 1;
+    protected function getQrCode($id) {
+        $url = config('app.url') . '/product/' . $id;
+        $qrcode_name = public_path('productQrCode/' . $id . '.png');
+        $a = QrCode::format('png')->generate($url);
+        echo $a;
+        dd($a);
     }
 }
