@@ -1,6 +1,8 @@
 <?php
 namespace App\services;
 
+use  SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 class ProductCardService {
 
     protected $font;
@@ -10,6 +12,8 @@ class ProductCardService {
     protected $black;
 
     protected $path;
+
+    protected $qrCodePath;
 
     public function __construct(){
         $this->font = resource_path('fonts/msyh.ttc');
@@ -25,16 +29,16 @@ class ProductCardService {
         imagettftext($this->canvas, 18, 0, 60, 313, $this->black, $this->font, '重 量（G）：' . $product->weight);
         imagettftext($this->canvas, 18, 0, 60, 425, $this->black, $this->font, '分 类：' . $product->category_trans);
         $this->getQrCode($product->id);
-//        list($src_w, $src_h) = getimagesize($qrCode);
+        $qrCode = imagecreatefrompng( $this->qrCodePath);
+        imagecopyresampled($this->canvas, $qrCode, 670, 50, 0, 0,400,400,imagesx($qrCode), imagesy($qrCode));
         imagejpeg($this->canvas, public_path($this->path));
         return '/' . $this->path;
     }
 
     protected function getQrCode($id) {
-        $url = config('app.url') . '/product/' . $id;
-        $qrcode_name = public_path('productQrCode/' . $id . '.png');
-        $a = QrCode::format('png')->generate($url);
-        echo $a;
-        dd($a);
+        $url = config('app.url') . 'product/' . $id;
+        if(!file_exists(public_path('qrcodes'))) mkdir(public_path('qrcodes'));
+        $this->qrCodePath = public_path('qrcodes/'. $id .'.png');
+        QrCode::format('png')->size(400)->generate($url, $this->qrCodePath);
     }
 }
