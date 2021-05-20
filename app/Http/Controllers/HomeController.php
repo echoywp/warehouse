@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        Auth::logout();
-        return view('index');
+        $list = Product::whereStatus(1)->get();
+        return view('home.index')->with([
+            'list' => $list
+        ]);
     }
 }
