@@ -6292,8 +6292,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'show'
+  name: 'show',
+  methods: {
+    goList: function goList() {
+      window.location.href = '/product';
+    }
+  }
 });
 
 /***/ }),
@@ -11498,7 +11504,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.product-detail[data-v-592df568]{\n    background: #424242;\n}\n.product-detail[data-v-592df568]:after{\n    border: none;\n}\n.product-detail>div[data-v-592df568]{\n    margin: 5px auto;\n    border-radius: 5px;\n    border-collapse: collapse;\n}\n.product-detail>div[data-v-592df568]:first-child{\n    margin-top: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.product-detail[data-v-592df568]{\n    background: #424242;\n}\n.product-detail[data-v-592df568]:after{\n    border: none;\n}\n.product-detail>div[data-v-592df568]{\n    margin: 0 auto;\n    border-bottom: 1px #424242 dashed;\n    border-collapse: collapse;\n}\n.product-detail>div[data-v-592df568]:last-child{\n    border-bottom: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66514,6 +66520,11 @@ var render = function() {
       _c(
         "van-goods-action",
         [
+          _c("van-goods-action-icon", {
+            attrs: { icon: "apps-o", text: "列表" },
+            on: { click: _vm.goList }
+          }),
+          _vm._v(" "),
           _c("van-goods-action-button", {
             attrs: { color: "#ff976a", type: "warning", text: "出库" }
           }),

@@ -11,6 +11,7 @@
         </van-cell-group>
         <van-image src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
         <van-goods-action>
+            <van-goods-action-icon icon="apps-o" text="列表" @click="goList"></van-goods-action-icon>
             <van-goods-action-button color="#ff976a" type="warning" text="出库"></van-goods-action-button>
             <van-goods-action-button color="#52a1e1" type="danger" text="入库"></van-goods-action-button>
         </van-goods-action>
@@ -19,7 +20,12 @@
 
 <script>
     export default {
-        name: 'show'
+        name: 'show',
+        methods: {
+            goList() {
+                window.location.href = '/product'
+            }
+        }
     }
 </script>
 
@@ -31,11 +37,11 @@
         border: none;
     }
     .product-detail>div{
-        margin: 5px auto;
-        border-radius: 5px;
+        margin: 0 auto;
+        border-bottom: 1px #424242 dashed;
         border-collapse: collapse;
     }
-    .product-detail>div:first-child{
-        margin-top: 0;
+    .product-detail>div:last-child{
+        border-bottom: none;
     }
 </style>
