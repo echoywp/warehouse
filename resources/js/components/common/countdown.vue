@@ -33,9 +33,8 @@
         },
         methods: {
             timerReduce() {
-                console.log(this.time)
                 this.timer = setInterval(()=>{
-                    if(this.time > 0 ){
+                    if(this.time > 1 ){
                         this.time--
                     }else{
                         clearInterval(this.timer);
@@ -46,7 +45,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

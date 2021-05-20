@@ -10845,3 +10845,14 @@ textarea.form-control-lg {
 body {
   background: #424242;
 }
+
+.top-title {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+}
+
+.main-content {
+  margin-top: 6vh;
+}

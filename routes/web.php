@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'HomeController@index');
+    Route::redirect('/', 'product');
+    Route::resource('product', 'HomeController');
 });
 
 

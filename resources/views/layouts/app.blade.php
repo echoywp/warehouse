@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm top-title">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', '库存管理') }}
@@ -40,7 +40,7 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main class="py-4 main-content">
         @yield('content')
     </main>
 </div>

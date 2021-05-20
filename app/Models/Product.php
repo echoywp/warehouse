@@ -11,7 +11,7 @@ class Product extends Model
 	use HasDateTimeFormatter;
     protected $table = 'product';
 
-    protected $appends = ['unit_trans', 'category_trans'];
+    protected $appends = ['unit_trans', 'category_trans', 'available_inventory'];
 
     protected $guarded = ['warehouse'];
 
@@ -38,6 +38,10 @@ class Product extends Model
 
     public function getUnitTransAttribute() {
         return config('option.option.unit')[$this->attributes['unit']];
+    }
+
+    public function getAvailableInventoryAttribute() {
+        return $this->getInventory()->sum('available_inventory');
     }
 
     public function getCategoryTransAttribute() {

@@ -10,8 +10,11 @@ require('./bootstrap');
 import Vue from 'vue/dist/vue.common.js';
 import Vant from 'vant';
 import 'vant/lib/index.css'
+import Router from 'vue-router'
 
 Vue.use(Vant)
+Vue.use(Router)
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,5 +34,5 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
