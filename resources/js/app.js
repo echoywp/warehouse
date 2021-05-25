@@ -10,10 +10,8 @@ require('./bootstrap');
 import Vue from 'vue/dist/vue.common.js';
 import Vant from 'vant';
 import 'vant/lib/index.css'
-import Router from 'vue-router'
 
 Vue.use(Vant)
-Vue.use(Router)
 
 
 /**
