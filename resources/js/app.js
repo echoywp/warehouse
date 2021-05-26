@@ -7,7 +7,7 @@
 require('./bootstrap');
 
 // window.Vue = require('vue').default;
-import Vue from 'vue/dist/vue.common.js';
+import Vue from 'vue';
 import Vant from 'vant';
 import 'vant/lib/index.css'
 

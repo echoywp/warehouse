@@ -15,14 +15,15 @@
             <van-goods-action-button color="#ff976a" type="warning" @click="out" text="出库"></van-goods-action-button>
             <van-goods-action-button color="#52a1e1" type="danger" @click="storage" text="入库"></van-goods-action-button>
         </van-goods-action>
-        <van-dialog v-model="dialogShow" :title="title" show-cancel-button>
-            <van-field v-model="quantity" :label="(title + '数量')" />
-        </van-dialog>
+        <van-popup v-model="dialogShow" position="bottom" closeable round class="inventory" @closed="close">
+            <van-field v-model="quantity" :label="(title + '数量')" type="digit" />
+            <van-button :loading="loading" type="primary" round color="#52a1e1" @click="httpRequest" class="inventory-btn">提 交</van-button>
+        </van-popup>
     </section>
 </template>
 
 <script>
-    import { storagePost } from '../../api'
+    import { product } from '../../api'
     import { Dialog } from 'vant';
 
     export default {
@@ -37,7 +38,9 @@
         data() {
             return {
                 dialogShow: false,
+                loading: false,
                 quantity: 0,
+                type: 0, // 0默认，1：入库，2出库
                 title: ''
             }
         },
@@ -47,11 +50,46 @@
             },
             storage() {
                 this.title = '入库'
+                this.type = 1
                 this.dialogShow = true
             },
             out() {
                 this.title = '出库'
+                this.type = 2
                 this.dialogShow = true
+            },
+            httpRequest() {
+                if (this.quantity < 1) {
+                    this.$notify({
+                        type: 'warning',
+                        message: '操作数量不能小于1',
+                        duration: 2000
+                    })
+                    return false
+                }
+                this.loading = true
+                product.inventoryPost({
+                    type: this.type,
+                    quantity: this.quantity
+                }).then(res => {
+                    const data = res.data
+                    this.$notify({
+                        type: data.type,
+                        message: data.message,
+                        duration: 2000
+                    })
+                    if (data.code === 200) {
+                        this.dialogShow = false
+                    }
+                    this.loading = false
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
+            close() {
+                this.dialogShow = false
+                this.loading = false
+                this.quantity = 0
             }
         }
     }
@@ -71,5 +109,13 @@
     }
     .product-detail>div:last-child{
         border-bottom: none;
+    }
+    .inventory{
+        padding: 30px 0;
+        text-align: center;
+    }
+    .inventory-btn {
+        margin: 0 auto;
+        width: 90%;
     }
 </style>

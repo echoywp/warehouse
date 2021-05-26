@@ -1,74 +1,29 @@
 import axios from "axios";
 
 // 环境
-axios.defaults.baseURL ='http://test.warehouse.com/';   //  要请求的后台地址
+axios.defaults.baseURL = 'http://test.warehouse.com/'   //  要请求的后台地址
 // 请求超时
-axios.defaults.timeout =30000;
-//  post 请求头
-axios.defaults.headers.post['Content-Type'] ='application/json';
-
-/**
- * get方法，对应get请求
- * @param {String} url [请求的url地址]
- * @param {Object} params [请求时携带的参数]
- */
-export function get(url, params){
-    return new Promise((resolve, reject) =>{
-        axios.get(url, {
-            params: params
+axios.defaults.timeout = 30000
+var HttpRequest = {
+    getRequest({ url, data = {}, method = "GET" }) {
+        return new Promise((resolve, reject) => {
+            this._getRequest(url, resolve, reject, data, method);
+        });
+    },
+    _getRequest: function(url, resolve, reject, data = {}, method = "GET") {
+        let format = method.toLocaleLowerCase() ==='get'?'params':'data';
+        axios({
+            url: url,
+            method: method,
+            [format]: data,
+            header: {
+                "content-type": "application/json"
+            }
         }).then(res => {
-            resolve(res.data)
-        }).catch(err => {
-            reject(err.data)
+            resolve(res);
+        }).catch(error => {
+            reject(error);
         })
-    });
-}
-
-/**
- * post方法，对应post请求
- * @param {String} url [请求的url地址]
- * @param {Object} params [请求时携带的参数]
- */
-export function post(url, params) {
-    return new Promise((resolve, reject) => {
-        axios.post(url, params,).then(res => {
-            resolve(res.data)
-        }).catch(err => {
-            reject(err.data)
-        })
-    });
-}
-
-/**
- * put方法，对应put请求
- * @param {String} url [请求的url地址]
- * @param {Object} params [请求时携带的参数]
- */
-export function put(url, params) {
-    return new Promise((resolve, reject) => {
-        axios.put(url, params,)
-            .then(res => {
-                resolve(res.data)
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
-}
-
-/**
- * $delete，对应delete请求
- */
-export function $delete(url, params){
-    return new Promise((resolve, reject) =>{
-        axios.delete(url, {
-            data: params
-        })
-            .then(res => {
-                resolve(res.data)
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
-}
+    }
+};
+export { HttpRequest };

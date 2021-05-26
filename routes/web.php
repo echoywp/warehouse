@@ -19,6 +19,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::redirect('/', 'product');
     Route::resource('product', 'HomeController');
+    Route::post('inventoryPost', 'HomeController@inventoryPost');
 });
 
 

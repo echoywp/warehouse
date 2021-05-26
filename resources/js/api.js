@@ -1,6 +1,13 @@
-import { post, $delete, put } from "./http";
+import { HttpRequest } from './http'
 
-// 登录
-export const login = data => post('auth/login', data);
+let product = {
+    inventoryPost(data) {
+        return HttpRequest.getRequest({
+            method: 'POST',
+            url: 'inventoryPost',
+            data: data
+        });
+    },
+};
 
-export const storagePost = data => post('storage', data);
+export { product }

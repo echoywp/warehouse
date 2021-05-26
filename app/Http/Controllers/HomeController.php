@@ -26,4 +26,11 @@ class HomeController extends Controller
                 'inventory' => $product->getInventory() ?? '{}'
         ]);
     }
+
+    public function inventoryPost(Request $request) {
+        if (!in_array($request->type, [1, 2])) {
+            return responseJson(501, '请求类型错误', 'warning');
+        }
+        return responseJson(200, '操作成功');
+    }
 }

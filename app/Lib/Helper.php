@@ -1,10 +1,12 @@
 <?php
 
-if(!function_exists('response')) {
-    function response($message, $type = 'success') {
-        return response()->json(['status' => true, 'data' => [
-            'type' => 'warning',
-            'message' => '此分类下还有相关产品，暂不可删除！'
-        ]]);
+if(!function_exists('responseJson')) {
+    function responseJson($code, $message, $type = 'success', $data = []) {
+        return response()->json([
+            'code' =>  $code,
+            'type' => $type,
+            'message' => $message,
+            'data' => ''
+        ]);
     }
 }
