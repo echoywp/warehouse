@@ -5,6 +5,7 @@ namespace App\Models;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
+use function Deployer\option;
 
 class Product extends Model
 {
@@ -29,7 +30,7 @@ class Product extends Model
     ];
 
     public function getInventory() {
-        return Inventory::whereProductId($this->id)->get();
+        return Inventory::whereProductId($this->id)->with('warehouse')->first();
     }
 
     public function setCategoryIdAttribute($value) {
@@ -41,7 +42,7 @@ class Product extends Model
     }
 
     public function getAvailableInventoryAttribute() {
-        return $this->getInventory()->sum('available_inventory');
+        return $this->getInventory() ? $this->getInventory()->available_inventory : 0;
     }
 
     public function getCategoryTransAttribute() {

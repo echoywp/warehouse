@@ -22,7 +22,8 @@ class HomeController extends Controller
 
     public function show(Product $product) {
         return view('home.show')->with([
-            'product' => $product
+            'detail' => $product,
+                'inventory' => $product->getInventory() ?? '{}'
         ]);
     }
 }

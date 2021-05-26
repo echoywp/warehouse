@@ -1,29 +1,57 @@
 <template>
     <section>
         <van-cell-group class="product-detail">
-            <van-cell title="产品名称" value="内容" />
-            <van-cell title="产品描述" value="描述信描述信描述信描述信3描述信1息" />
-            <van-cell title="规格" value="1213" />
-            <van-cell title="分类" value="1213" />
-            <van-cell title="重量" value="1213" />
-            <van-cell title="仓库" value="1213" />
-            <van-cell title="单位" value="1213" />
+            <van-cell title="产品名称" :value="detail.name" />
+            <van-cell title="产品描述" :value="detail.desc" />
+            <van-cell title="规格(CM)" :value="detail.length + ' * ' + detail.width + ' * ' + detail.height" />
+            <van-cell title="分类" :value="detail.category_trans" />
+            <van-cell title="重量(G)" :value="detail.weight" />
+            <van-cell title="单位" :value="detail.unit_trans" />
+            <van-cell title="仓库信息" :value="inventory.warehouse ? inventory.warehouse.name : ''" />
         </van-cell-group>
         <van-image src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
         <van-goods-action>
             <van-goods-action-icon icon="apps-o" text="列表" @click="goList"></van-goods-action-icon>
-            <van-goods-action-button color="#ff976a" type="warning" text="出库"></van-goods-action-button>
-            <van-goods-action-button color="#52a1e1" type="danger" text="入库"></van-goods-action-button>
+            <van-goods-action-button color="#ff976a" type="warning" @click="out" text="出库"></van-goods-action-button>
+            <van-goods-action-button color="#52a1e1" type="danger" @click="storage" text="入库"></van-goods-action-button>
         </van-goods-action>
+        <van-dialog v-model="dialogShow" :title="title" show-cancel-button>
+            <van-field v-model="quantity" :label="(title + '数量')" />
+        </van-dialog>
     </section>
 </template>
 
 <script>
+    import { storagePost } from '../../api'
+    import { Dialog } from 'vant';
+
     export default {
         name: 'show',
+        components: {
+            [Dialog.Component.name]: Dialog.Component
+        },
+        props: {
+            detail: Object,
+            inventory: Object
+        },
+        data() {
+            return {
+                dialogShow: false,
+                quantity: 0,
+                title: ''
+            }
+        },
         methods: {
             goList() {
                 window.location.href = '/product'
+            },
+            storage() {
+                this.title = '入库'
+                this.dialogShow = true
+            },
+            out() {
+                this.title = '出库'
+                this.dialogShow = true
             }
         }
     }

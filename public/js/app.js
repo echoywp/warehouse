@@ -6273,6 +6273,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api */ "./resources/js/api.js");
+/* harmony import */ var vant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vant */ "./node_modules/vant/es/dialog/index.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -6293,14 +6297,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'show',
+  components: _defineProperty({}, vant__WEBPACK_IMPORTED_MODULE_1__.default.Component.name, vant__WEBPACK_IMPORTED_MODULE_1__.default.Component),
+  props: {
+    detail: Object,
+    inventory: Object
+  },
+  data: function data() {
+    return {
+      dialogShow: false,
+      quantity: 0,
+      title: ''
+    };
+  },
   methods: {
     goList: function goList() {
       window.location.href = '/product';
+    },
+    storage: function storage() {
+      this.title = '入库';
+      this.dialogShow = true;
+    },
+    out: function out() {
+      this.title = '出库';
+      this.dialogShow = true;
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/api.js":
+/*!*****************************!*\
+  !*** ./resources/js/api.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "login": () => (/* binding */ login),
+/* harmony export */   "storagePost": () => (/* binding */ storagePost)
+/* harmony export */ });
+/* harmony import */ var _http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./http */ "./resources/js/http.js");
+ // 登录
+
+var login = function login(data) {
+  return (0,_http__WEBPACK_IMPORTED_MODULE_0__.post)('auth/login', data);
+};
+var storagePost = function storagePost(data) {
+  return (0,_http__WEBPACK_IMPORTED_MODULE_0__.post)('storage', data);
+};
 
 /***/ }),
 
@@ -6387,6 +6440,95 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+
+/***/ }),
+
+/***/ "./resources/js/http.js":
+/*!******************************!*\
+  !*** ./resources/js/http.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "get": () => (/* binding */ get),
+/* harmony export */   "post": () => (/* binding */ post),
+/* harmony export */   "put": () => (/* binding */ put),
+/* harmony export */   "$delete": () => (/* binding */ $delete)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+ // 环境
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://test.warehouse.com/'; //  要请求的后台地址
+// 请求超时
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.timeout) = 30000; //  post 请求头
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.post["Content-Type"]) = 'application/json';
+/**
+ * get方法，对应get请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function get(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get(url, {
+      params: params
+    }).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * post方法，对应post请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function post(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, params).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * put方法，对应put请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+
+function put(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().put(url, params).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
+/**
+ * $delete，对应delete请求
+ */
+
+function $delete(url, params) {
+  return new Promise(function (resolve, reject) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, {
+      data: params
+    }).then(function (res) {
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.data);
+    });
+  });
+}
 
 /***/ }),
 
@@ -66488,24 +66630,44 @@ var render = function() {
         "van-cell-group",
         { staticClass: "product-detail" },
         [
-          _c("van-cell", { attrs: { title: "产品名称", value: "内容" } }),
+          _c("van-cell", {
+            attrs: { title: "产品名称", value: _vm.detail.name }
+          }),
+          _vm._v(" "),
+          _c("van-cell", {
+            attrs: { title: "产品描述", value: _vm.detail.desc }
+          }),
           _vm._v(" "),
           _c("van-cell", {
             attrs: {
-              title: "产品描述",
-              value: "描述信描述信描述信描述信3描述信1息"
+              title: "规格(CM)",
+              value:
+                _vm.detail.length +
+                " * " +
+                _vm.detail.width +
+                " * " +
+                _vm.detail.height
             }
           }),
           _vm._v(" "),
-          _c("van-cell", { attrs: { title: "规格", value: "1213" } }),
+          _c("van-cell", {
+            attrs: { title: "分类", value: _vm.detail.category_trans }
+          }),
           _vm._v(" "),
-          _c("van-cell", { attrs: { title: "分类", value: "1213" } }),
+          _c("van-cell", {
+            attrs: { title: "重量(G)", value: _vm.detail.weight }
+          }),
           _vm._v(" "),
-          _c("van-cell", { attrs: { title: "重量", value: "1213" } }),
+          _c("van-cell", {
+            attrs: { title: "单位", value: _vm.detail.unit_trans }
+          }),
           _vm._v(" "),
-          _c("van-cell", { attrs: { title: "仓库", value: "1213" } }),
-          _vm._v(" "),
-          _c("van-cell", { attrs: { title: "单位", value: "1213" } })
+          _c("van-cell", {
+            attrs: {
+              title: "仓库信息",
+              value: _vm.inventory.warehouse ? _vm.inventory.warehouse.name : ""
+            }
+          })
         ],
         1
       ),
@@ -66523,11 +66685,40 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("van-goods-action-button", {
-            attrs: { color: "#ff976a", type: "warning", text: "出库" }
+            attrs: { color: "#ff976a", type: "warning", text: "出库" },
+            on: { click: _vm.out }
           }),
           _vm._v(" "),
           _c("van-goods-action-button", {
-            attrs: { color: "#52a1e1", type: "danger", text: "入库" }
+            attrs: { color: "#52a1e1", type: "danger", text: "入库" },
+            on: { click: _vm.storage }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "van-dialog",
+        {
+          attrs: { title: _vm.title, "show-cancel-button": "" },
+          model: {
+            value: _vm.dialogShow,
+            callback: function($$v) {
+              _vm.dialogShow = $$v
+            },
+            expression: "dialogShow"
+          }
+        },
+        [
+          _c("van-field", {
+            attrs: { label: _vm.title + "数量" },
+            model: {
+              value: _vm.quantity,
+              callback: function($$v) {
+                _vm.quantity = $$v
+              },
+              expression: "quantity"
+            }
           })
         ],
         1

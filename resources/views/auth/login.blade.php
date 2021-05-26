@@ -18,7 +18,7 @@
                 <div class="card-header">{{ __('登录') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') . '?redirect='. urlencode(request()->redirect) }}">
                         @csrf
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-lg-2 col-form-label text-md-right">{{ __('姓名') }}</label>
