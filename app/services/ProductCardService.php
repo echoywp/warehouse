@@ -17,6 +17,7 @@ class ProductCardService {
 
     public function __construct(){
         $this->font = resource_path('fonts/msyh.ttc');
+        makeDir(public_path('productCard'));
         $this->canvas = imagecreatefromstring(file_get_contents(resource_path('images/product-card-template.png')));
         $this->black = imagecolorallocate($this->canvas, 60, 60, 60);
     }

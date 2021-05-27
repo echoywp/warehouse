@@ -105,9 +105,9 @@ class ProductController extends AdminController
                     ->setTitleColumn('title')->required();
                 $form->select('unit')->options(config('option.option.unit'))->required();
                 if ($form->isEditing()) {
-                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->value($form->model()->getInventory()->pluck('id')->toArray())->disable();
+                    $form->select('warehouse')->options(Warehouse::selector())->value($form->model()->getInventory()->warehouse_id)->disable();
                 } else {
-                    $form->multipleSelect('warehouse')->options(Warehouse::selector())->required();
+                    $form->select('warehouse')->options(Warehouse::selector())->required();
                 }
             });
             $form->column(6, function (Form $form) {

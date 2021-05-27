@@ -10,3 +10,11 @@ if(!function_exists('responseJson')) {
         ]);
     }
 }
+
+if (!function_exists('makeDir')) {
+    function makeDir($path) {
+        if (!file_exists($path)) {
+            mkdir($path);
+        }
+    }
+}

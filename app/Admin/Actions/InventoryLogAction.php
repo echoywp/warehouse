@@ -32,13 +32,24 @@ class InventoryLogAction extends Action
         $gird =  Grid::make(new InventoryLog(), function (Grid $grid) use ($id) {
             $grid->model()->orderBy('id', 'desc')->whereInventoryId($id);
             $grid->column('user');
-            $grid->column('type_trans', trans('操作类型'));
+            $grid->column('type', trans('操作类型'))->using([
+                1 => '新增',
+                2 => '入库',
+                3 => '出库',
+                4 => '变迁',
+            ])->label([
+                1 => 'primary',
+                2 => 'warning',
+                3 => 'success',
+                4 => 'danger',
+            ]);
             $grid->column('column_trans', '库存类型');
             $grid->column('num', '操作数量');
             $grid->column('created_at');
             $grid->withBorder();
             $grid->disableToolbar();
             $grid->disableRowSelector();
+            $grid->paginate(10);
 //            $grid->disablePagination();
             $grid->disableActions();
             $grid->addTableClass(['table-text-center']);

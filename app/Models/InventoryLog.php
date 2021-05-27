@@ -13,21 +13,11 @@ class InventoryLog extends Model
 	use HasDateTimeFormatter;
     protected $table = 'inventory_log';
     protected $fillable = ['type', 'column', 'user', 'num', 'module', 'inventory_id', 'product_id',];
-    protected $appends = ['type_trans', 'column_trans'];
+    protected $appends = ['column_trans'];
 
-    public static $type = [
-        1 => '新增',
-        2 => '入库',
-        3 => '出库',
-        4 => '变迁'
-    ];
     public static $column_trans = [
         'available_inventory' => '可用库存',
     ];
-
-    public function getTypeTransAttribute() {
-        return self::$type[$this->attributes['type']] ?? '未知';
-    }
 
     public function getColumnTransAttribute() {
         if ($this->attributes['column']) {
