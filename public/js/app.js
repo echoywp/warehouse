@@ -6326,12 +6326,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     storage: function storage() {
       this.title = '入库';
-      this.type = 1;
+      this.type = 2;
       this.dialogShow = true;
     },
     out: function out() {
       this.title = '出库';
-      this.type = 2;
+      this.type = 3;
       this.dialogShow = true;
     },
     httpRequest: function httpRequest() {
@@ -6348,6 +6348,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true;
       _api__WEBPACK_IMPORTED_MODULE_0__.product.inventoryPost({
+        id: this.detail.id,
         type: this.type,
         quantity: this.quantity
       }).then(function (res) {
@@ -6372,6 +6373,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.dialogShow = false;
       this.loading = false;
       this.quantity = 0;
+    },
+    quantityValue: function quantityValue() {
+      this.quantity = parseInt(this.quantity);
     }
   }
 });
@@ -66727,6 +66731,7 @@ var render = function() {
         [
           _c("van-field", {
             attrs: { label: _vm.title + "数量", type: "digit" },
+            on: { input: _vm.quantityValue },
             model: {
               value: _vm.quantity,
               callback: function($$v) {

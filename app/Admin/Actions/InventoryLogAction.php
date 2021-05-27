@@ -30,14 +30,16 @@ class InventoryLogAction extends Action
     {
         $id = $this->getKey();
         $gird =  Grid::make(new InventoryLog(), function (Grid $grid) use ($id) {
-            $grid->model()->orderBy('id', 'desc')->whereInventoryId($id)->with('user')->limit(6);
-            $grid->column('user.name', trans('操作人'));
-            $grid->column('module', trans('操作模块'));
+            $grid->model()->orderBy('id', 'desc')->whereInventoryId($id);
+            $grid->column('user');
+            $grid->column('type_trans', trans('操作类型'));
+            $grid->column('column_trans', '库存类型');
+            $grid->column('num', '操作数量');
             $grid->column('created_at');
             $grid->withBorder();
             $grid->disableToolbar();
             $grid->disableRowSelector();
-            $grid->disablePagination();
+//            $grid->disablePagination();
             $grid->disableActions();
             $grid->addTableClass(['table-text-center']);
         });
@@ -78,7 +80,7 @@ JS;
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">{$this->title()}（最新6条）</h4>
+                    <h4 class="modal-title">{$this->title()}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   </div>
                   <div class="modal-body"></div>

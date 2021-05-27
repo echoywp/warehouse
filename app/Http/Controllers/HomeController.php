@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Models\Inventory;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,10 +30,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function inventoryPost(Request $request) {
-        if (!in_array($request->type, [1, 2])) {
-            return responseJson(501, '请求类型错误', 'warning');
-        }
+    public function inventoryPost(ProductRequest $request) {
+        Inventory::changeInventory($request->type, $request->id, $request->quantity, 'available_inventory');
         return responseJson(200, '操作成功');
     }
 }

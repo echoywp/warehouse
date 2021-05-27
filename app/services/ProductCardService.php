@@ -21,6 +21,11 @@ class ProductCardService {
         $this->black = imagecolorallocate($this->canvas, 60, 60, 60);
     }
 
+    /**
+     * @param $product
+     * @return string
+     * 生成产品卡
+     */
     public function createCard($product) {
         $this->path = 'productCard/'. $product->id .'.jpg';
         imagettftext($this->canvas, 18, 0, 60, 89, $this->black, $this->font, '名 称：' . $product->name);
@@ -35,6 +40,10 @@ class ProductCardService {
         return '/' . $this->path;
     }
 
+    /**
+     * @param $id
+     * 生成二维码
+     */
     protected function getQrCode($id) {
         $url = config('app.url') . 'product/' . $id;
         if(!file_exists(public_path('qrcodes'))) mkdir(public_path('qrcodes'));

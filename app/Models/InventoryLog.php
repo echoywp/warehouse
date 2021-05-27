@@ -6,39 +6,64 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryLog extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'inventory_log';
-    protected $fillable = ['type', 'column', 'user_id', 'num', 'module', 'inventory_id', 'product_id',];
+    protected $fillable = ['type', 'column', 'user', 'num', 'module', 'inventory_id', 'product_id',];
+    protected $appends = ['type_trans', 'column_trans'];
 
-    public function user() {
-        return $this->hasOne(AdminUser::class, 'id', 'user_id')->select('id', 'name');
+    public static $type = [
+        1 => '新增',
+        2 => '入库',
+        3 => '出库',
+        4 => '变迁'
+    ];
+    public static $column_trans = [
+        'available_inventory' => '可用库存',
+    ];
+
+    public function getTypeTransAttribute() {
+        return self::$type[$this->attributes['type']] ?? '未知';
+    }
+
+    public function getColumnTransAttribute() {
+        if ($this->attributes['column']) {
+            return self::$column_trans[$this->attributes['column']] ?? '未知';
+        }
     }
 
     /**
-     * @param int $type
-     * @param string $module
+     * @param int $type 1新增产品，2入库，3出库，4变迁
      * @param int $inventory_id
      * @param int $product_id
      * @param string $column
      * @param int $num
      * 记录操作日志
      */
-    public static function log(int $type, string $module, int $inventory_id, int $product_id, string $column = '', int $num = 0) {
+    public static function log(int $type, int $inventory_id, int $product_id, string $column = '', int $num = 0) {
         switch ($type) {
             case 1:
+            case 4:
                 self::create([
                     'type' => $type,
-                    'module' => $module,
                     'inventory_id' => $inventory_id,
                     'product_id' => $product_id,
-                    'user_id' => Admin::user()->id
+                    'user' => Admin::user()->name
                 ]);
                 break;
-            case 2 || 3 || 4:
-                break;
+            case 2:
+            case 3:
+                self::create([
+                    'type' => $type,
+                    'inventory_id' => $inventory_id,
+                    'product_id' => $product_id,
+                    'user' => Auth::user()->name,
+                    'column' => $column,
+                    'num' => $num
+                ]);
         }
     }
 }

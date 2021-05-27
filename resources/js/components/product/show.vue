@@ -16,7 +16,7 @@
             <van-goods-action-button color="#52a1e1" type="danger" @click="storage" text="入库"></van-goods-action-button>
         </van-goods-action>
         <van-popup v-model="dialogShow" position="bottom" closeable round class="inventory" @closed="close">
-            <van-field v-model="quantity" :label="(title + '数量')" type="digit" />
+            <van-field v-model="quantity" :label="(title + '数量')" type="digit" @input="quantityValue" />
             <van-button :loading="loading" type="primary" round color="#52a1e1" @click="httpRequest" class="inventory-btn">提 交</van-button>
         </van-popup>
     </section>
@@ -50,12 +50,12 @@
             },
             storage() {
                 this.title = '入库'
-                this.type = 1
+                this.type = 2
                 this.dialogShow = true
             },
             out() {
                 this.title = '出库'
-                this.type = 2
+                this.type = 3
                 this.dialogShow = true
             },
             httpRequest() {
@@ -69,6 +69,7 @@
                 }
                 this.loading = true
                 product.inventoryPost({
+                    id: this.detail.id,
                     type: this.type,
                     quantity: this.quantity
                 }).then(res => {
@@ -90,6 +91,9 @@
                 this.dialogShow = false
                 this.loading = false
                 this.quantity = 0
+            },
+            quantityValue() {
+                this.quantity = parseInt(this.quantity)
             }
         }
     }
