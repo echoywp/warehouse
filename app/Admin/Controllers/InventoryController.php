@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\InventoryLogAction;
+use App\Admin\Renderable\InventoryLogTable;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Warehouse;
@@ -10,9 +10,11 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Widgets\Modal;
 
 class InventoryController extends AdminController
 {
+
     /**
      * Make a grid builder.
      *
@@ -33,7 +35,12 @@ class InventoryController extends AdminController
                 $filter->equal('product_id',  trans('inventory.fields.product_id'))->select(Product::selector());
             });
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                $actions->append(InventoryLogAction::make()->setKey($actions->row->id));
+                $actions->append(
+                    Modal::make()
+                        ->lg()
+                        ->title('日志')
+                        ->body(InventoryLogTable::make()->payload(['id' => $actions->row->id])) // Modal 组件支持直接传递 渲染类实例
+                        ->button('查看日志'));
                 $actions->disableEdit();
                 $actions->disableDelete();
                 $actions->disableView();

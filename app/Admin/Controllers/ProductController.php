@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\ProductLogAction;
+use App\Admin\Renderable\ProductLogTable;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Category;
@@ -12,6 +13,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Widgets\Modal;
 
 class ProductController extends AdminController
 {
@@ -55,7 +57,12 @@ class ProductController extends AdminController
             });
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                $actions->append(ProductLogAction::make()->setKey($actions->row->id));
+                $actions->append(
+                    Modal::make()
+                        ->lg()
+                        ->title('日志')
+                        ->body(ProductLogTable::make()->payload(['id' => $actions->row->id])) // Modal 组件支持直接传递 渲染类实例
+                        ->button('查看日志'));
             });
 
         });
