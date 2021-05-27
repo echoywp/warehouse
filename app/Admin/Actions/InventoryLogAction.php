@@ -49,8 +49,8 @@ class InventoryLogAction extends Action
             $grid->withBorder();
             $grid->disableToolbar();
             $grid->disableRowSelector();
-            $grid->paginate(10);
-//            $grid->disablePagination();
+//            $grid->paginate(10);
+            $grid->disablePagination();
             $grid->disableActions();
             $grid->addTableClass(['table-text-center']);
         });
@@ -61,11 +61,11 @@ class InventoryLogAction extends Action
     {
         return <<<'JS'
             function func(target, html, data) {
-            var $modal = $(target.data('target'));
+                var $modal = $(target.data('target'));
 
-            $modal.find('.modal-body').html(html)
-            $modal.modal('show')
-        }
+                $modal.find('.modal-body').html(html)
+                $modal.modal('show')
+            }
 JS;
 
     }

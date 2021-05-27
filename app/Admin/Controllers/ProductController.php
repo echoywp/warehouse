@@ -26,21 +26,20 @@ class ProductController extends AdminController
         return Grid::make(new Product(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('name');
-            $grid->column('category_trans', admin_trans_field('category_id'));
-            $grid->column('unit_trans', admin_trans_field('unit'));
-            $grid->column('length');
-            $grid->column('width');
-            $grid->column('height');
-            $grid->column('weight');
-            $grid->column('price');
+            $grid->column('category_trans', admin_trans_field('category_id'))->label();
             $grid->status()->switch();
+            $grid->column('unit_trans', admin_trans_field('unit'));
+            $grid->column('length', '规格')->display(function () {
+                return $this->length . '*' . $this->width . '*' . $this->height;
+            });
+            $grid->column('price');
+            $grid->column('updated_at')->display(function ($value) {
+                return substr($value, 0, 10);
+            })->sortable();
             $grid->column('id', '货架卡')->display(function () {
                 $product = Product::find($this->id);
                 return app(ProductCardService::class)->createCard($product);
             })->image('/');
-            $grid->column('updated_at')->display(function ($value) {
-                return substr($value, 0, 10);
-            })->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->panel();
@@ -100,9 +99,7 @@ class ProductController extends AdminController
                 $form->text('name')->required()->rules('max:20', config('option.rules'))
                     ->creationRules('unique:product,name', config('option.rules'))->updateRules('unique:product,name,{{id}}', config('option.rules'));
                 $form->text('desc')->required()->rules('max:50', config('option.rules'));
-                $form->tree('category_id')
-                    ->nodes((new Category())->allNodes())
-                    ->setTitleColumn('title')->required();
+                $form->select('category_id')->options(Category::selectOptions());
                 $form->select('unit')->options(config('option.option.unit'))->required();
                 if ($form->isEditing()) {
                     $form->select('warehouse')->options(Warehouse::selector())->value($form->model()->getInventory()->warehouse_id)->disable();
@@ -136,10 +133,10 @@ class ProductController extends AdminController
                 }
             });
             $form->submitted(function (Form $form) {
-                $category_id = $form->input('category_id');
-                if($category_id && strpos($category_id, ',')) {
-                    $form->responseValidationMessages('category_id', '分类不可多选');
-                }
+//                $category_id = $form->input('category_id');
+//                if($category_id && strpos($category_id, ',')) {
+//                    $form->responseValidationMessages('category_id', '分类不可多选');
+//                }
             });
         });
     }

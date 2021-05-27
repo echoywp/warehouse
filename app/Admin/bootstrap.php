@@ -59,13 +59,13 @@ config([
 ]);
 
 // 双击弹框
-$script = <<<JS
-      $("#grid-table > tbody > tr").on("dblclick",function() {
-         var obj = $(this).find(".feather.icon-edit-1");
-         if (obj.length == 1) {
-             obj.trigger("click")
-         }
-      })
-JS;
-Admin::script($script);
+//$script = <<<JS
+//      $("#grid-table > tbody > tr").on("dblclick",function() {
+//         var obj = $(this).find(".feather.icon-edit-1");
+//         if (obj.length == 1) {
+//             obj.trigger("click")
+//         }
+//      })
+//JS;
+//Admin::script($script);
 

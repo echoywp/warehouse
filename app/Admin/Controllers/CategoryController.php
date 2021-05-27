@@ -53,7 +53,7 @@ class CategoryController extends AdminController
     protected function form()
     {
         return Form::make(new Category(), function (Form $form) {
-            $form->select('parent_id')->options(Category::selector())->required();
+            $form->select('parent_id')->options(Category::selectOptions())->required();
             $form->text('title')->required();
         });
     }
