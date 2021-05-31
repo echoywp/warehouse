@@ -1,7 +1,7 @@
 <template>
     <van-grid :border="false" :column-num="2" :gutter="10">
         <van-grid-item v-for="(item, index) in list" :key="index" class="product-box" @click="click(item)">
-            <van-image class="product-cover" fit="cover" src="https://img01.yzcdn.cn/vant/apple-1.jpg"></van-image>
+            <van-image class="product-cover" fit="cover" :src="item.good_pic"></van-image>
             <div class="info">
                 <h1>{{item.name}}</h1>
                 <span>{{item.desc}}  数量：{{item.available_inventory}}</span>

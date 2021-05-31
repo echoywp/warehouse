@@ -26,7 +26,8 @@ class Product extends Model
         'height',
         'weight',
         'price',
-        'status'
+        'status',
+        'good_pic'
     ];
 
     public function getInventory() {
@@ -35,6 +36,10 @@ class Product extends Model
 
     public function setCategoryIdAttribute($value) {
         $this->attributes['category_id'] = $value[0];
+    }
+
+    public function getGoodPicAttribute($value) {
+        return config('app.url') . ($value ? '/storage/'.$value : '/images/apple-1.jpg');
     }
 
     public function getUnitTransAttribute() {

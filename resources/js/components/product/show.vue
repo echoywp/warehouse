@@ -8,8 +8,9 @@
             <van-cell title="重量(G)" :value="detail.weight" />
             <van-cell title="单位" :value="detail.unit_trans" />
             <van-cell title="仓库信息" :value="inventory.warehouse ? inventory.warehouse.name : ''" />
+            <van-cell title="库存信息" :value="inventory ? inventory.available_inventory : ''" />
         </van-cell-group>
-        <van-image src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+        <van-image :src="detail.good_pic"/>
         <van-goods-action>
             <van-goods-action-icon icon="apps-o" text="列表" @click="goList"></van-goods-action-icon>
             <van-goods-action-button color="#ff976a" type="warning" @click="out" text="出库"></van-goods-action-button>

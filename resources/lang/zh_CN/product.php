@@ -15,6 +15,7 @@ return [
         'price' => '采购价',
         'status' => '状态',
         'warehouse' => '仓库',
+        'good_pic' => '产品图片',
     ],
     'options' => [
     ],

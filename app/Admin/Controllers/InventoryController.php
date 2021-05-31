@@ -39,7 +39,7 @@ class InventoryController extends AdminController
                     Modal::make()
                         ->lg()
                         ->title('日志')
-                        ->body(InventoryLogTable::make()->payload(['id' => $actions->row->id])) // Modal 组件支持直接传递 渲染类实例
+                        ->body(InventoryLogTable::make()->payload(['id' => $actions->row->id]))
                         ->button('查看日志'));
                 $actions->disableEdit();
                 $actions->disableDelete();

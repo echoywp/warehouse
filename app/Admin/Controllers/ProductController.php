@@ -61,7 +61,7 @@ class ProductController extends AdminController
                     Modal::make()
                         ->lg()
                         ->title('日志')
-                        ->body(ProductLogTable::make()->payload(['id' => $actions->row->id])) // Modal 组件支持直接传递 渲染类实例
+                        ->body(ProductLogTable::make()->payload(['id' => $actions->row->id]))
                         ->button('查看日志'));
             });
 
@@ -120,6 +120,7 @@ class ProductController extends AdminController
                 $form->text('width')->required()->rules('numeric', config('option.rules'));
                 $form->text('height')->required()->rules('numeric', config('option.rules'));
                 $form->text('weight')->required()->rules('numeric', config('option.rules'));
+                $form->image('good_pic')->required()->uniqueName();
             });
             $form->width(8, 3);
             $form->hidden('status')->customFormat(function ($v) {

@@ -6301,6 +6301,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -66593,10 +66594,7 @@ var render = function() {
         [
           _c("van-image", {
             staticClass: "product-cover",
-            attrs: {
-              fit: "cover",
-              src: "https://img01.yzcdn.cn/vant/apple-1.jpg"
-            }
+            attrs: { fit: "cover", src: item.good_pic }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "info" }, [
@@ -66684,14 +66682,19 @@ var render = function() {
               title: "仓库信息",
               value: _vm.inventory.warehouse ? _vm.inventory.warehouse.name : ""
             }
+          }),
+          _vm._v(" "),
+          _c("van-cell", {
+            attrs: {
+              title: "库存信息",
+              value: _vm.inventory ? _vm.inventory.available_inventory : ""
+            }
           })
         ],
         1
       ),
       _vm._v(" "),
-      _c("van-image", {
-        attrs: { src: "https://img01.yzcdn.cn/vant/cat.jpeg" }
-      }),
+      _c("van-image", { attrs: { src: _vm.detail.good_pic } }),
       _vm._v(" "),
       _c(
         "van-goods-action",
