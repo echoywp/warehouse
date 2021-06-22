@@ -24,9 +24,27 @@ use Dcat\Admin\Show;
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+Filter::resolving(function (Filter $filter) {
+    $filter->expand();
+    $filter->panel();
+});
+Grid::resolving(function (Grid $grid) {
+    $grid->setActionClass(Grid\Displayers\Actions::class);
+    $grid->model()->orderBy('id', 'desc');
+    $grid->disableViewButton();
+    $grid->showQuickEditButton();
+    $grid->enableDialogCreate();
+    $grid->disableBatchDelete();
+    $grid->actions(function (Grid\Displayers\Actions $actions) {
+//        $actions->disableView();
+//        $actions->disableDelete();
+        $actions->disableEdit();
+    });
+    $grid->option('dialog_form_area', ['70%', '80%']);
+});
+
 Form::resolving(function (Form $form) {
     $form->disableEditingCheck();
-
     $form->disableCreatingCheck();
 
     $form->disableViewCheck();

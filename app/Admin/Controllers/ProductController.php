@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\ProductLogAction;
 use App\Admin\Renderable\ProductLogTable;
 use App\Models\Inventory;
 use App\Models\Product;

@@ -6376,6 +6376,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.quantity = 0;
     },
     quantityValue: function quantityValue() {
+      if (!this.quantity) {
+        this.quantity = 0;
+      }
+
       this.quantity = parseInt(this.quantity);
     }
   }

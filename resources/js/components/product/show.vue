@@ -94,6 +94,9 @@
                 this.quantity = 0
             },
             quantityValue() {
+                if (!this.quantity) {
+                    this.quantity = 0
+                }
                 this.quantity = parseInt(this.quantity)
             }
         }
