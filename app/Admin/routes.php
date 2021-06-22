@@ -32,4 +32,12 @@ Route::group([
 
     // 员工管理
     $router->resource('user', 'UserController');
+
+    /**
+     * 采购管理
+     */
+    // 供应商管理
+    $router->resource('supplier', 'SupplierController');
+    // 采购单
+    $router->resource('purchase-order', 'PurchaseOrderController');
 });

@@ -46,8 +46,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection warehouse_id
      * @property Grid\Column|Collection product_id
      * @property Grid\Column|Collection available_inventory
+     * @property Grid\Column|Collection user
      * @property Grid\Column|Collection num
-     * @property Grid\Column|Collection module
      * @property Grid\Column|Collection inventory_id
      * @property Grid\Column|Collection channel
      * @property Grid\Column|Collection destination
@@ -63,10 +63,13 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection height
      * @property Grid\Column|Collection weight
      * @property Grid\Column|Collection price
+     * @property Grid\Column|Collection good_pic
      * @property Grid\Column|Collection content
-     * @property Grid\Column|Collection email_verified_at
-     * @property Grid\Column|Collection address
+     * @property Grid\Column|Collection contract_person
      * @property Grid\Column|Collection mobile
+     * @property Grid\Column|Collection address
+     * @property Grid\Column|Collection settlement
+     * @property Grid\Column|Collection email_verified_at
      * @property Grid\Column|Collection contact_person
      * @property Grid\Column|Collection area
      *
@@ -105,8 +108,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection warehouse_id(string $label = null)
      * @method Grid\Column|Collection product_id(string $label = null)
      * @method Grid\Column|Collection available_inventory(string $label = null)
+     * @method Grid\Column|Collection user(string $label = null)
      * @method Grid\Column|Collection num(string $label = null)
-     * @method Grid\Column|Collection module(string $label = null)
      * @method Grid\Column|Collection inventory_id(string $label = null)
      * @method Grid\Column|Collection channel(string $label = null)
      * @method Grid\Column|Collection destination(string $label = null)
@@ -122,10 +125,13 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection height(string $label = null)
      * @method Grid\Column|Collection weight(string $label = null)
      * @method Grid\Column|Collection price(string $label = null)
+     * @method Grid\Column|Collection good_pic(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
-     * @method Grid\Column|Collection email_verified_at(string $label = null)
-     * @method Grid\Column|Collection address(string $label = null)
+     * @method Grid\Column|Collection contract_person(string $label = null)
      * @method Grid\Column|Collection mobile(string $label = null)
+     * @method Grid\Column|Collection address(string $label = null)
+     * @method Grid\Column|Collection settlement(string $label = null)
+     * @method Grid\Column|Collection email_verified_at(string $label = null)
      * @method Grid\Column|Collection contact_person(string $label = null)
      * @method Grid\Column|Collection area(string $label = null)
      */
@@ -169,8 +175,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection warehouse_id
      * @property Show\Field|Collection product_id
      * @property Show\Field|Collection available_inventory
+     * @property Show\Field|Collection user
      * @property Show\Field|Collection num
-     * @property Show\Field|Collection module
      * @property Show\Field|Collection inventory_id
      * @property Show\Field|Collection channel
      * @property Show\Field|Collection destination
@@ -186,10 +192,13 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection height
      * @property Show\Field|Collection weight
      * @property Show\Field|Collection price
+     * @property Show\Field|Collection good_pic
      * @property Show\Field|Collection content
-     * @property Show\Field|Collection email_verified_at
-     * @property Show\Field|Collection address
+     * @property Show\Field|Collection contract_person
      * @property Show\Field|Collection mobile
+     * @property Show\Field|Collection address
+     * @property Show\Field|Collection settlement
+     * @property Show\Field|Collection email_verified_at
      * @property Show\Field|Collection contact_person
      * @property Show\Field|Collection area
      *
@@ -228,8 +237,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection warehouse_id(string $label = null)
      * @method Show\Field|Collection product_id(string $label = null)
      * @method Show\Field|Collection available_inventory(string $label = null)
+     * @method Show\Field|Collection user(string $label = null)
      * @method Show\Field|Collection num(string $label = null)
-     * @method Show\Field|Collection module(string $label = null)
      * @method Show\Field|Collection inventory_id(string $label = null)
      * @method Show\Field|Collection channel(string $label = null)
      * @method Show\Field|Collection destination(string $label = null)
@@ -245,10 +254,13 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection height(string $label = null)
      * @method Show\Field|Collection weight(string $label = null)
      * @method Show\Field|Collection price(string $label = null)
+     * @method Show\Field|Collection good_pic(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
-     * @method Show\Field|Collection email_verified_at(string $label = null)
-     * @method Show\Field|Collection address(string $label = null)
+     * @method Show\Field|Collection contract_person(string $label = null)
      * @method Show\Field|Collection mobile(string $label = null)
+     * @method Show\Field|Collection address(string $label = null)
+     * @method Show\Field|Collection settlement(string $label = null)
+     * @method Show\Field|Collection email_verified_at(string $label = null)
      * @method Show\Field|Collection contact_person(string $label = null)
      * @method Show\Field|Collection area(string $label = null)
      */

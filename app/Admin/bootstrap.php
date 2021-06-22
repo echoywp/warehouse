@@ -53,9 +53,8 @@ Form::resolving(function (Form $form) {
         $tools->disableDelete();
         $tools->disableView();
     });
-
 });
-
+Form::extend('reviewIcon', \App\Admin\Extensions\Form\ReviewIcon::class);
 // 替换模板
 app('view')->prependNamespace('admin', resource_path('views/admin'));
 
